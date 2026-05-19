@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabTrack Pro - Dashboard</title>
+    
+    <!-- Custom Assets -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        :root {
+            --sidebar-width: 260px;
+            --accent-blue: #3b82f6;
+            --bg-base: #09090b;
+            --bg-sidebar: #121214;
+            --bg-card: #18181b;
+            --border-dim: #27272a;
+            --text-muted: #71717a;
+            --text-dim: #a1a1aa;
+        }
+
+        @layer base {
+            body {
+                @apply bg-[#09090b] text-[#e4e4e7] antialiased;
+                font-family: 'Inter', sans-serif;
+            }
+        }
+
+        @layer components {
+            .sidebar {
+                @apply bg-[#121214] border-r border-[#27272a] h-screen fixed left-0 top-0 z-50 transition-transform duration-300;
+                width: var(--sidebar-width);
+            }
+
+            .sidebar-overlay {
+                @apply fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-sm transition-opacity duration-300;
+            }
+
+            .main-content {
+                @apply min-h-screen transition-[padding] duration-300 w-full;
+            }
+
+            .main-content-shifted {
+                @apply md:pl-[260px];
+            }
+
+            .nav-item {
+                @apply px-6 py-2.5 flex items-center gap-3 text-sm font-medium text-[#a1a1aa] transition-all border-l-4 border-transparent hover:text-white hover:bg-[#1a1a1c];
+            }
+
+            .nav-item.active {
+                @apply text-white bg-[#1e1e21] border-blue-500;
+            }
+
+            .lab-hero-card {
+                @apply bg-[#18181b] border border-[#27272a] p-6 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/5;
+            }
+
+            .eq-card {
+                @apply p-5 bg-[#0c0c0e] border border-[#27272a] rounded-xl transition-all duration-200 hover:bg-[#161619] hover:border-[#3f3f46];
+            }
+
+            .icon-box {
+                @apply h-10 w-10 rounded-lg border border-blue-500/20 bg-blue-500/5 flex items-center justify-center transition-all duration-300;
+            }
+
+            .icon-box-sm {
+                @apply h-8 w-8 rounded bg-blue-500/10 flex items-center justify-center;
+            }
+
+            .accent-badge {
+                @apply flex items-center gap-2 px-4 py-1.5 bg-zinc-900 rounded-full border border-zinc-800 shadow-inner shadow-black/20;
+            }
+
+            .accent-badge i {
+                @apply w-3.5 h-3.5 text-zinc-500;
+            }
+
+            .accent-badge span {
+                @apply text-[11px] font-medium text-zinc-400;
+            }
+
+            .meta-box {
+                @apply bg-[#18181b] p-5 rounded-xl border border-[#27272a] shadow-sm;
+            }
+
+            .meta-label {
+                @apply text-[10px] uppercase text-[#71717a] font-bold tracking-widest mb-1;
+            }
+
+            .status-pill {
+                @apply px-2.5 py-1 rounded-md text-[10px] font-bold uppercase;
+            }
+
+            .line-clamp-2 {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            main#main-content header#main-header button#sidebar-toggle {
+                @apply active:scale-95 hover:bg-zinc-800 hover:border-zinc-700 transition-all cursor-pointer;
+            }
+
+            nav#sidebar-nav > div {
+                @apply flex flex-col h-full overflow-y-auto;
+            }
+
+            nav#sidebar-nav {
+                @apply shadow-2xl;
+            }
+
+            .header-badge {
+                @apply min-w-[100px] justify-center font-mono shadow-inner shadow-black/20;
+            }
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        ::-webkit-scrollbar {
+            @apply w-1.5;
+        }
+
+        ::-webkit-scrollbar-track {
+            @apply bg-transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            @apply bg-[#27272a] rounded-full hover:bg-[#3f3f46];
+        }
+    </style>
+</head>
+<body class="flex min-h-screen bg-[#09090b]">
+    <!-- Mobile Sidebar Overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay hidden"></div>
+
+    <!-- Navigation Sidebar -->
+    <nav id="sidebar-nav" class="sidebar -translate-x-full">
+        <div class="p-8 pb-4">
+            <div class="flex items-center gap-3 mb-12">
+                <div class="bg-blue-600 p-2 rounded-lg shadow-lg shadow-blue-600/30">
+                    <i data-lucide="microscope" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-white tracking-tighter uppercase leading-none">IFtracker</h1>
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest px-4 mb-4">Módulos</h3>
+                <a href="index.html" class="nav-item active">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+
+            <div class="mt-10 space-y-1">
+                <h3 class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest px-4 mb-4">Setores</h3>
+                <div id="sidebar-labs-items">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content flex-1 flex flex-col">
+        <header id="main-header" class="h-20 border-b border-zinc-800 flex items-center justify-between px-4 sm:px-8 bg-zinc-950/50 backdrop-blur-md sticky top-0 z-40">
+            <div class="flex items-center gap-3 sm:gap-4 overflow-hidden">
+                <button id="sidebar-toggle" class="text-zinc-400 hover:text-white transition-colors bg-zinc-900 p-2 rounded-lg border border-zinc-800 shrink-0">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+                <div class="h-4 w-[1px] bg-zinc-800 mx-1 sm:mx-2 shrink-0"></div>
+                <div class="truncate">
+                   <h2 class="text-sm font-bold text-white sm:hidden">IFtracker</h2>
+                   <span class="text-sm font-medium text-zinc-400 hidden sm:inline">Dashboard de Laboratórios</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center shrink-0">
+                <div class="accent-badge">
+                    <i data-lucide="clock"></i>
+                    <span id="current-date-display"></span>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-4 sm:p-8 max-w-[1600px] mx-auto w-full">
+            <!-- Home -->
+            <div class="space-y-10">
+                <!-- Main Dashboard Stats -->
+                <div id="stats-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                    <div class="meta-box bg-gradient-to-br from-zinc-900 to-zinc-950">
+                        <div class="meta-label text-blue-500">Documentos</div>
+                        <div id="total-items-count" class="text-3xl font-black text-white tracking-tighter">0</div>
+                        <div class="mt-2 text-[10px] text-zinc-500 uppercase">Total Geral</div>
+                    </div>
+                    <div class="meta-box bg-gradient-to-br from-zinc-900 to-zinc-950">
+                        <div class="meta-label text-blue-500">Setores</div>
+                        <div id="labs-active-count" class="text-3xl font-black text-white tracking-tighter">0</div>
+                        <div class="mt-2 text-[10px] text-zinc-500 uppercase">Monitorados</div>
+                    </div>
+                    <div class="meta-box bg-gradient-to-br from-zinc-900 to-zinc-950">
+                        <div class="meta-label text-emerald-500">Status</div>
+                        <div class="text-xl font-black text-emerald-500 tracking-tighter uppercase">100% OK</div>
+                        <div class="mt-2 text-[10px] text-zinc-500 uppercase">Integridade</div>
+                    </div>
+                    <div class="meta-box bg-gradient-to-br from-zinc-900 to-zinc-950">
+                        <div class="meta-label text-purple-500">Versão</div>
+                        <div class="text-3xl font-black text-white tracking-tighter">2.4</div>
+                        <div class="mt-2 text-[10px] text-zinc-500 uppercase">LTP - Core</div>
+                    </div>
+                </div>
+
+                <!-- Global Search -->
+                <div id="search-section" class="relative group">
+                    <div class="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+                        <i data-lucide="search" class="w-5 h-5 text-zinc-500 group-focus-within:text-blue-500 transition-colors"></i>
+                    </div>
+                    <input id="global-search-input"
+                           type="text" 
+                           placeholder="Pesquisar em todo o inventário (equipamento, marca ou modelo)..." 
+                           class="w-full bg-zinc-900 border-2 border-zinc-800 rounded-3xl py-6 pl-16 pr-8 text-white text-lg focus:outline-none focus:border-blue-500 transition-all shadow-2xl placeholder:text-zinc-600">
+                    
+                    <!-- Search Results Dropdown -->
+                    <div id="search-results-dropdown" class="absolute top-full left-0 right-0 mt-4 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-50 hidden">
+                        <!-- Gerado via JS -->
+                    </div>
+                </div>
+
+                <div id="pdf-index-section" class="space-y-4">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest px-1">PDFs indexados</h3>
+                            <p class="text-[10px] text-zinc-500">Lista de documentos POP vinculados ao inventário.</p>
+                        </div>
+                        <span id="pdf-index-count" class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest"></span>
+                    </div>
+                    <div id="pdf-index-list" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+                        <!-- Gerado via JS -->
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-10">
+                    <!-- Labs Section -->
+                    <div id="labs-container" class="xl:col-span-8 space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest px-1">Selecione um Setor de Laboratório</h3>
+                        </div>
+                        <div id="labs-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Gerado via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Side Panel: Recent/Featured -->
+                    <div id="side-panel" class="xl:col-span-4 space-y-6">
+                        <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest px-1">Acesso Rápido</h3>
+                        <div id="featured-grid-container" class="space-y-3">
+                            <!-- Gerado via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>

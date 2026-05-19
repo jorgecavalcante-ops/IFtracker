@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* 
+ * DESIGN TOKENS
+ */
+:root {
+    --sidebar-width: 260px;
+    --accent-blue: #3b82f6;
+    --bg-base: #09090b;
+    --bg-sidebar: #121214;
+    --bg-card: #18181b;
+    --border-dim: #27272a;
+    --text-muted: #71717a;
+    --text-dim: #a1a1aa;
+}
+
+/* 
+ * BASE STYLES
+ */
+@layer base {
+    body {
+        @apply bg-[#09090b] text-[#e4e4e7] antialiased;
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+/* 
+ * COMPONENTS 
+ */
+@layer components {
+    /* Layout Structures */
+    .sidebar {
+        @apply bg-[#121214] border-r border-[#27272a] h-screen fixed left-0 top-0 z-50 transition-transform duration-300;
+        width: var(--sidebar-width);
+    }
+
+    .sidebar-overlay {
+        @apply fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-sm transition-opacity duration-300;
+    }
+
+    .main-content {
+        @apply min-h-screen transition-[padding] duration-300 w-full;
+    }
+
+    .main-content-shifted {
+        @apply md:pl-[260px];
+    }
+
+    /* Navigation Elements */
+    .nav-item {
+        @apply px-6 py-2.5 flex items-center gap-3 text-sm font-medium text-[#a1a1aa] transition-all border-l-4 border-transparent 
+               hover:text-white hover:bg-[#1a1a1c];
+    }
+
+    .nav-item.active {
+        @apply text-white bg-[#1e1e21] border-blue-500;
+    }
+
+    /* Card Systems */
+    .lab-hero-card {
+        @apply bg-[#18181b] border border-[#27272a] p-6 rounded-xl transition-all duration-300 
+               hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/5;
+    }
+
+    .eq-card {
+        @apply p-5 bg-[#0c0c0e] border border-[#27272a] rounded-xl transition-all duration-200 
+               hover:bg-[#161619] hover:border-[#3f3f46];
+    }
+
+    /* Icon & Badge Systems */
+    .icon-box {
+        @apply h-10 w-10 rounded-lg border border-blue-500/20 bg-blue-500/5 flex items-center justify-center transition-all duration-300;
+    }
+
+    .icon-box-sm {
+        @apply h-8 w-8 rounded bg-blue-500/10 flex items-center justify-center;
+    }
+
+    .accent-badge {
+        @apply flex items-center gap-2 px-4 py-1.5 bg-zinc-900 rounded-full border border-zinc-800 shadow-inner shadow-black/20;
+    }
+
+    .accent-badge i {
+        @apply w-3.5 h-3.5 text-zinc-500;
+    }
+
+    .accent-badge span {
+        @apply text-[11px] font-medium text-zinc-400;
+    }
+
+    /* Meta / Info Displays */
+    .meta-box {
+        @apply bg-[#18181b] p-5 rounded-xl border border-[#27272a] shadow-sm;
+    }
+
+    .meta-label {
+        @apply text-[10px] uppercase text-[#71717a] font-bold tracking-widest mb-1;
+    }
+
+    .status-pill {
+        @apply px-2.5 py-1 rounded-md text-[10px] font-bold uppercase;
+    }
+
+    /* Specific Element Refinements */
+    main#main-content header#main-header button#sidebar-toggle {
+        @apply active:scale-95 hover:bg-zinc-800 hover:border-zinc-700 transition-all cursor-pointer;
+    }
+
+    nav#sidebar-nav > div {
+        @apply flex flex-col h-full overflow-y-auto;
+    }
+
+    nav#sidebar-nav {
+        @apply shadow-2xl;
+    }
+
+    header#main-header div.flex.items-center div.flex.items-center.gap-2.px-4.py-1\.5.bg-zinc-900 {
+        @apply min-w-[100px] justify-center font-mono shadow-inner shadow-black/20;
+    }
+}
+
+/* 
+ * UTILITIES 
+ */
+.font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+[x-cloak] { 
+    display: none !important; 
+}
+
+/* 
+ * CUSTOM SCROLLBAR 
+ */
+::-webkit-scrollbar {
+    @apply w-1.5;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-[#27272a] rounded-full hover:bg-[#3f3f46];
+}

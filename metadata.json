@@ -1,0 +1,6 @@
+{
+  "name": "IFtracker",
+  "description": "Sistema de documentação técnica e galeria de protocolos operacionais padrão (POP) para laboratórios do IFTO Araguaína.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API", "gallery", "documentation", "laboratory-management"]
+}
